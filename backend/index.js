@@ -32,16 +32,24 @@ try {
   console.log(error);
 }
 
-const allowedOrigin = process.env.ALLOWED_ORIGIN || process.env.FRONTEND_URL || "http://localhost:5173";
-
 app.use(cors({
-  origin: [
-    allowedOrigin,
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://127.0.0.1:5173",
-    "http://127.0.0.1:5174"
-  ],
+  origin: function (origin, callback) {
+    const allowedOrigin = process.env.ALLOWED_ORIGIN || process.env.FRONTEND_URL || "http://localhost:5173";
+
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    // Check if the origin matches expected patterns
+    if (origin === allowedOrigin ||
+      origin.startsWith("http://localhost:") ||
+      origin.startsWith("http://127.0.0.1:") ||
+      origin.endsWith(".onrender.com")) {
+      return callback(null, true);
+    }
+
+    // If not matching, reject the CORS request
+    return callback(new Error("The CORS policy for this site does not allow access from the specified Origin."), false);
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
