@@ -2,6 +2,7 @@ services:
   # Backend Node.js API
   - type: web
     name: todolist-backend
+    plan: free
     env: node
     rootDir: backend
     buildCommand: npm install
@@ -23,6 +24,7 @@ services:
   # Frontend Vite React App
   - type: web
     name: todolist-frontend
+    plan: free
     env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
