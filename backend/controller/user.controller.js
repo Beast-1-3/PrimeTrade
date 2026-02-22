@@ -2,12 +2,15 @@ import User from "../model/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../jwt/token.js";
 
-const getCookieOptions = (rememberMe = false) => ({
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 60 * 60 * 1000 // 7 days or 1 hour
-});
+const getCookieOptions = (rememberMe = false) => {
+    const isProd = process.env.NODE_ENV === "production" || process.env.RENDER === "true";
+    return {
+        httpOnly: true,
+        secure: isProd,
+        sameSite: isProd ? "none" : "lax",
+        maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 60 * 60 * 1000 // 7 days or 1 hour
+    };
+};
 
 export const register = async (req, res) => {
     try {

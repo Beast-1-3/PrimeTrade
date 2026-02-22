@@ -16,14 +16,10 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     (error) => {
-        // If the server explicitly returns a 401 Unauthorized
         if (error.response && error.response.status === 401) {
             // Clear local storage and enforce logout
             localStorage.removeItem("token");
             localStorage.removeItem("user");
-
-            // Auto-redirect to login
-            window.location.href = '/login';
         }
         return Promise.reject(error);
     }

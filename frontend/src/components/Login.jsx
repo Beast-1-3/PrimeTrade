@@ -95,7 +95,7 @@ export default function Login() {
                     value={username}
                     onChange={(e) => { setUsername(e.target.value); if (touched.username) validateField("username"); }}
                     onBlur={() => handleBlur("username")}
-                    placeholder="Enter Username"
+                    placeholder="Enter Email"
                     className={`auth-input ${touched.username && fieldErrors.username ? "border-red-400 focus:ring-red-400" : ""}`}
                   />
                 </div>
