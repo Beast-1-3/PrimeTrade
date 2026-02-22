@@ -9,6 +9,7 @@ import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 
 const app = express();
+app.set("trust proxy", 1); // Trust Render proxy for secure cookies
 dotenv.config();
 
 // port

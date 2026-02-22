@@ -4,8 +4,8 @@ import { generateToken } from "../jwt/token.js";
 
 const getCookieOptions = (rememberMe = false) => ({
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+    secure: true,
+    sameSite: "none",
     maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 60 * 60 * 1000 // 7 days or 1 hour
 });
 
