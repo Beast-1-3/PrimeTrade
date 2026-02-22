@@ -114,13 +114,13 @@ function Home() {
   return (
     <div className="relative">
       {/* Header Area */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
-        <h2 className="text-3xl font-bold text-gray-800">
-          Welcome back, {username} <span className="inline-block  ml-2">👋</span>
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+          Welcome back, {username} <span className="inline-block ml-2">👋</span>
         </h2>
         <button
           onClick={() => setShowAddModal(true)}
-          className="mt-4 md:mt-0 flex items-center justify-center gap-2 px-5 py-2.5 border border-[#ff6b6b] text-[#ff6b6b] font-semibold rounded-full hover:bg-[#ff6b6b] hover:text-white transition-colors duration-200"
+          className="mt-4 md:mt-0 flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 border border-[#ff6b6b] text-[#ff6b6b] text-sm md:text-base font-semibold rounded-full hover:bg-[#ff6b6b] hover:text-white transition-colors duration-200"
         >
           <PlusIcon /> Add task
         </button>
@@ -247,10 +247,10 @@ function Home() {
 
       {/* Main Content Box */}
       {selectedTodo ? (
-        <div className="bg-white border-[1.5px] border-[#eff0f3] rounded-[24px] p-8 mt-2 shadow-sm animate-fade-in relative flex flex-col min-h-[calc(100vh-200px)]">
+        <div className="bg-white border-[1.5px] border-[#eff0f3] rounded-[24px] p-4 md:p-8 mt-2 shadow-sm animate-fade-in relative flex flex-col min-h-[calc(100vh-200px)]">
           <button
             onClick={() => setSelectedTodo(null)}
-            className="absolute top-8 right-10 text-[14px] font-bold text-gray-800 hover:text-[#ff6b6b] transition-colors"
+            className="absolute top-4 right-4 md:top-8 md:right-10 text-[12px] md:text-[14px] font-bold text-gray-800 hover:text-[#ff6b6b] transition-colors"
             style={{ textDecoration: 'underline', textUnderlineOffset: '4px' }}
           >
             Go Back
@@ -287,12 +287,12 @@ function Home() {
           </div>
         </div>
       ) : (
-        <div className="bg-white border-[1.5px] border-[#eff0f3] rounded-[24px] p-6 lg:p-8 mt-2 shadow-sm min-h-[calc(100vh-200px)] flex flex-col">
+        <div className="bg-white border-[1.5px] border-[#eff0f3] rounded-[16px] md:rounded-[24px] p-4 md:p-6 lg:p-8 mt-2 shadow-sm min-h-[calc(100vh-200px)] flex flex-col">
           {/* Grid Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10 items-start">
 
             {/* Left Column: To-Do */}
-            <div className="lg:col-span-2 bg-transparent relative overflow-hidden lg:border-r-[1.5px] lg:border-[#eff0f3] lg:pr-10">
+            <div className="lg:col-span-2 bg-transparent relative overflow-hidden lg:border-r-[1.5px] lg:border-[#eff0f3] lg:pr-6 xl:pr-10">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2 text-[#ff6b6b]">
                   <ClipboardIcon />
@@ -324,25 +324,25 @@ function Home() {
                     return (
                       <div
                         key={todo._id}
-                        className="bg-white border-[1.5px] border-[#eff0f3] rounded-[16px] p-6 shadow-none flex flex-col gap-[14px] relative group cursor-pointer hover:border-gray-200 hover:shadow-sm transition-all"
+                        className="bg-white border-[1.5px] border-[#eff0f3] rounded-[16px] p-4 md:p-6 shadow-none flex flex-col gap-3 md:gap-[14px] relative group cursor-pointer hover:border-gray-200 hover:shadow-sm transition-all"
                         onClick={(e) => {
                           if (e.target.closest('button')) return;
                           setSelectedTodo(todo);
                         }}
                       >
-                        <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo._id); }} className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors p-1" title="Delete Task">
+                        <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo._id); }} className="absolute top-2 right-2 md:top-4 md:right-4 text-gray-400 hover:text-red-500 transition-colors p-1" title="Delete Task">
                           <TrashIcon />
                         </button>
-                        <div className="flex gap-4">
+                        <div className="flex gap-3 md:gap-4">
                           {/* Circle Complete Toggle (Hollow) */}
                           <button onClick={() => updateTodoStatus(todo._id, todo.isComplete)} className={`mt-[2px] w-[20px] h-[20px] rounded-full border-[2.5px] ${borderColor} shrink-0 transition-colors flex items-center justify-center`}>
                           </button>
 
 
-                          <div className="flex-1 flex justify-between gap-6 pr-2">
+                          <div className="flex-1 flex justify-between gap-4 md:gap-6 pr-6 md:pr-2">
                             <div className="flex flex-col">
-                              <h4 className="text-[20px] font-bold text-[#1f2937] leading-[1.3] mb-[12px]">{todo.text}</h4>
-                              <p className="text-[#6b7280] text-[16px] leading-[1.5] font-medium pr-8">
+                              <h4 className="text-[18px] md:text-[20px] font-bold text-[#1f2937] leading-[1.3] mb-2 md:mb-[12px] pr-2">{todo.text}</h4>
+                              <p className="text-[#6b7280] text-[14px] md:text-[16px] leading-[1.5] font-medium md:pr-8">
                                 {todo.description || "No description provided."}
                               </p>
                             </div>
@@ -350,7 +350,7 @@ function Home() {
                         </div>
 
 
-                        <div className="flex justify-between items-center mt-[10px] pl-[36px] pr-2">
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mt-1 md:mt-[10px] pl-8 md:pl-[36px] pr-2 gap-2 sm:gap-4">
                           <div className="flex gap-4 text-[12px] font-semibold flex-wrap">
                             <div>
                               <span className="text-[#374151]">Priority: </span>
@@ -458,7 +458,7 @@ function Home() {
                     completedTodos.map(todo => (
                       <div
                         key={todo._id}
-                        className="bg-white border-[1.5px] border-[#eff0f3] rounded-[16px] p-6 shadow-none flex flex-col gap-[14px] relative group cursor-pointer hover:border-[#10b981]/30 hover:shadow-sm transition-all"
+                        className="bg-white border-[1.5px] border-[#eff0f3] rounded-[16px] p-4 md:p-6 shadow-none flex flex-col gap-[14px] relative group cursor-pointer hover:border-[#10b981]/30 hover:shadow-sm transition-all"
                         onClick={(e) => {
                           if (e.target.closest('button')) return;
                           setSelectedTodo(todo);

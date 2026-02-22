@@ -2,12 +2,12 @@ import User from "../model/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../jwt/token.js";
 
-const cookieOptions = {
+const getCookieOptions = (rememberMe = false) => ({
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-    maxAge: 60 * 60 * 1000 // 1 hour
-};
+    maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 60 * 60 * 1000 // 7 days or 1 hour
+});
 
 export const register = async (req, res) => {
     try {
@@ -23,7 +23,7 @@ export const register = async (req, res) => {
         const savedUser = await user.save();
         if (savedUser) {
             const token = generateToken(savedUser);
-            res.status(201).cookie("token", token, cookieOptions).json({
+            res.status(201).cookie("token", token, getCookieOptions(false)).json({
                 message: `User sign up successful`,
                 savedUser
             });
@@ -37,7 +37,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const { identifier, password } = req.body;
+        const { identifier, password, rememberMe } = req.body;
         const user = await User.findOne({
             $or: [{ email: identifier }, { username: identifier }]
         }).select("+password");
@@ -46,7 +46,7 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "Invalid credentials" });
         }
         const token = generateToken(user);
-        res.status(200).cookie("token", token, cookieOptions).json({
+        res.status(200).cookie("token", token, getCookieOptions(rememberMe)).json({
             message: "Login successful"
         });
     } catch (error) {

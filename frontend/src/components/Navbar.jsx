@@ -56,14 +56,14 @@ export default function Navbar({ searchQuery, setSearchQuery, todos = [], user }
     };
 
     return (
-        <nav className="h-16 bg-white border-b border-gray-100 flex items-center px-6 fixed top-0 w-full z-[60]">
+        <nav className="h-16 bg-white border-b border-gray-100 flex items-center px-4 md:px-6 fixed top-0 w-full z-[60] gap-2 md:gap-4">
 
             <div
-                className="flex items-center gap-2.5 cursor-pointer w-[280px] pl-4 shrink-0 transition-transform active:scale-95"
+                className="flex items-center gap-1.5 md:gap-2.5 cursor-pointer md:w-[240px] shrink-0 transition-transform active:scale-95"
                 onClick={() => navigate("/")}
             >
 
-                <h1 className="text-[24px] font-extrabold tracking-tight">
+                <h1 className="text-[18px] md:text-[24px] font-extrabold tracking-tight">
                     <span className="text-[#ff6b6b]">{pink}</span><span className="text-gray-900">{black}</span>
                 </h1>
             </div>
@@ -129,12 +129,12 @@ export default function Navbar({ searchQuery, setSearchQuery, todos = [], user }
             </div>
 
 
-            <div className="flex items-center justify-end pl-4 shrink-0 gap-6">
-                <Link to="/profile" className="flex items-center justify-center w-10 h-10 rounded-full bg-[#111827] text-white font-bold text-lg hover:ring-2 hover:ring-offset-2 hover:ring-[#ff6b6b] transition-all shadow-sm">
+            <div className="flex items-center justify-end pl-2 md:pl-4 shrink-0 gap-3 md:gap-6">
+                <Link to="/profile" className="flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#111827] text-white font-bold text-sm md:text-lg hover:ring-2 hover:ring-offset-2 hover:ring-[#ff6b6b] transition-all shadow-sm">
                     {getInitials()}
                 </Link>
-                <button onClick={handleLogout} className="flex items-center gap-1.5 text-sm font-bold text-red-500 hover:text-red-700 transition-colors group">
-                    Logout
+                <button onClick={handleLogout} className="flex items-center gap-1 md:gap-1.5 text-xs md:text-sm font-bold text-red-500 hover:text-red-700 transition-colors group">
+                    <span className="hidden sm:inline">Logout</span>
                     <LogoutIcon className="w-4 h-4 text-red-400 group-hover:text-red-600 transition-colors" />
                 </button>
                 <div className="hidden md:flex flex-col items-end border-l border-gray-200 pl-4">

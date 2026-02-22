@@ -46,6 +46,7 @@ export default function Login() {
       const response = await axiosInstance.post(`/user/sign-in`, {
         identifier: username,
         password: password,
+        rememberMe: rememberMe,
       });
 
       if (response.status === 200 || response.status === 201) {

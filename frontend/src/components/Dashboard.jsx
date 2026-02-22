@@ -19,7 +19,7 @@ export default function Dashboard() {
         <div className="min-h-screen bg-[#f5f7fb]">
             <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} user={user} />
             <div className="flex pt-[80px]">
-                <main className="flex-1 p-8 min-h-[calc(100vh-80px)] animate-fade-in relative z-10 w-full">
+                <main className="flex-1 p-4 md:p-8 min-h-[calc(100vh-80px)] animate-fade-in relative z-10 w-full">
                     <Outlet context={{ username: user?.username, searchQuery, setSearchQuery }} />
                 </main>
             </div>
