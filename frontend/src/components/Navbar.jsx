@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import axiosInstance from "../utils/axiosInstance";
 
 export default function Navbar({ searchQuery, setSearchQuery, todos = [] }) {
     const navigate = useNavigate();
@@ -34,11 +35,19 @@ export default function Navbar({ searchQuery, setSearchQuery, todos = [] }) {
 
     const getPageTitle = () => {
         if (location.pathname === '/profile') return { pink: 'Pro', black: 'file' };
-        if (location.pathname === '/help') return { pink: 'Hel', black: 'p' };
         return { pink: 'Dash', black: 'board' };
     };
 
     const { pink, black } = getPageTitle();
+
+    const handleLogout = async () => {
+        try {
+            await axiosInstance.get('/user/logout');
+            navigate("/login");
+        } catch (error) {
+            console.error("Logout error", error);
+        }
+    };
 
     return (
         <nav className="h-16 bg-white border-b border-gray-100 flex items-center px-6 fixed top-0 w-full z-[60]">
@@ -54,8 +63,9 @@ export default function Navbar({ searchQuery, setSearchQuery, todos = [] }) {
             </div>
 
 
-            <div className="flex-1 flex justify-center lg:justify-start lg:pl-10 relative">
-                <div className="relative w-full max-w-2xl group">
+            {/* Centered Search Bar */}
+            <div className="absolute left-1/2 -translate-x-1/2 w-full max-w-[500px] z-10">
+                <div className="relative w-full group">
                     <input
                         type="text"
                         placeholder="Search your task here..."
@@ -86,7 +96,7 @@ export default function Navbar({ searchQuery, setSearchQuery, todos = [] }) {
                         <MagnifyingGlassIcon />
                     </button>
 
-
+                    {/* Suggestions Dropdown */}
                     {showSuggestions && searchQuery && suggestions.length > 0 && (
                         <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden z-50">
                             {suggestions.map((todo) => (
@@ -115,7 +125,9 @@ export default function Navbar({ searchQuery, setSearchQuery, todos = [] }) {
 
 
             <div className="flex items-center justify-end pl-4 shrink-0 gap-6">
-                <div className="flex flex-col items-end">
+                <Link to="/profile" className="text-sm font-bold text-gray-700 hover:text-[#ff6b6b] transition-colors">Profile</Link>
+                <button onClick={handleLogout} className="text-sm font-bold text-red-500 hover:text-red-700 transition-colors">Logout</button>
+                <div className="hidden md:flex flex-col items-end border-l border-gray-200 pl-4">
                     <span className="text-sm font-bold text-gray-800">{currentDay}</span>
                     <span className="text-xs font-semibold text-blue-400">{currentDate}</span>
                 </div>
