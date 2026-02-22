@@ -5,7 +5,7 @@ import { generateToken } from "../jwt/token.js";
 const cookieOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
     maxAge: 60 * 60 * 1000 // 1 hour
 };
 

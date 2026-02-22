@@ -1,0 +1,38 @@
+services:
+  # Backend Node.js API
+  - type: web
+    name: todolist-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ALLOWED_ORIGIN
+        value: "https://todolist-frontend.onrender.com"
+      - key: FRONTEND_URL
+        value: "https://todolist-frontend.onrender.com"
+
+  # Frontend Vite React App
+  - type: web
+    name: todolist-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_API_URL
+        value: "https://todolist-backend.onrender.com"
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
