@@ -9,7 +9,7 @@ import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 
 const app = express();
-app.set("trust proxy", 1); // Trust Render proxy for secure cookies
+app.set("trust proxy", 1); // Trust the first proxy (Render) to fix IP-based rate limiting
 dotenv.config();
 
 // port
@@ -44,7 +44,8 @@ app.use(cors({
     if (origin === allowedOrigin ||
       origin.startsWith("http://localhost:") ||
       origin.startsWith("http://127.0.0.1:") ||
-      origin.endsWith(".onrender.com")) {
+      origin.endsWith(".onrender.com") ||
+      origin.endsWith(".vercel.app")) { // Added support for Vercel
       return callback(null, true);
     }
 
