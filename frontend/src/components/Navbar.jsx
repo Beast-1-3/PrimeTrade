@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
 
-export default function Navbar({ searchQuery, setSearchQuery, todos = [] }) {
+export default function Navbar({ searchQuery, setSearchQuery, todos = [], user }) {
     const navigate = useNavigate();
 
     // Get current date string
@@ -40,6 +40,12 @@ export default function Navbar({ searchQuery, setSearchQuery, todos = [] }) {
 
     const { pink, black } = getPageTitle();
 
+    const getInitials = () => {
+        if (user?.firstName) return user.firstName.charAt(0).toUpperCase();
+        if (user?.username) return user.username.charAt(0).toUpperCase();
+        return "U";
+    };
+
     const handleLogout = async () => {
         try {
             await axiosInstance.get('/user/logout');
@@ -63,9 +69,8 @@ export default function Navbar({ searchQuery, setSearchQuery, todos = [] }) {
             </div>
 
 
-            {/* Centered Search Bar */}
-            <div className="absolute left-1/2 -translate-x-1/2 w-full max-w-[500px] z-10">
-                <div className="relative w-full group">
+            <div className="flex-1 flex justify-center lg:justify-start lg:pl-10 relative">
+                <div className="relative w-full max-w-2xl group">
                     <input
                         type="text"
                         placeholder="Search your task here..."
@@ -96,7 +101,7 @@ export default function Navbar({ searchQuery, setSearchQuery, todos = [] }) {
                         <MagnifyingGlassIcon />
                     </button>
 
-                    {/* Suggestions Dropdown */}
+
                     {showSuggestions && searchQuery && suggestions.length > 0 && (
                         <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden z-50">
                             {suggestions.map((todo) => (
@@ -125,8 +130,13 @@ export default function Navbar({ searchQuery, setSearchQuery, todos = [] }) {
 
 
             <div className="flex items-center justify-end pl-4 shrink-0 gap-6">
-                <Link to="/profile" className="text-sm font-bold text-gray-700 hover:text-[#ff6b6b] transition-colors">Profile</Link>
-                <button onClick={handleLogout} className="text-sm font-bold text-red-500 hover:text-red-700 transition-colors">Logout</button>
+                <Link to="/profile" className="flex items-center justify-center w-10 h-10 rounded-full bg-[#111827] text-white font-bold text-lg hover:ring-2 hover:ring-offset-2 hover:ring-[#ff6b6b] transition-all shadow-sm">
+                    {getInitials()}
+                </Link>
+                <button onClick={handleLogout} className="flex items-center gap-1.5 text-sm font-bold text-red-500 hover:text-red-700 transition-colors group">
+                    Logout
+                    <LogoutIcon className="w-4 h-4 text-red-400 group-hover:text-red-600 transition-colors" />
+                </button>
                 <div className="hidden md:flex flex-col items-end border-l border-gray-200 pl-4">
                     <span className="text-sm font-bold text-gray-800">{currentDay}</span>
                     <span className="text-xs font-semibold text-blue-400">{currentDate}</span>
@@ -138,4 +148,9 @@ export default function Navbar({ searchQuery, setSearchQuery, todos = [] }) {
 
 const MagnifyingGlassIcon = () => (
     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+);
+const LogoutIcon = ({ className }) => (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+    </svg>
 );

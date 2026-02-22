@@ -247,7 +247,7 @@ function Home() {
 
       {/* Main Content Box */}
       {selectedTodo ? (
-        <div className="bg-white border-[1.5px] border-[#eff0f3] rounded-[24px] p-8 mt-2 shadow-sm animate-fade-in relative flex flex-col min-h-[500px]">
+        <div className="bg-white border-[1.5px] border-[#eff0f3] rounded-[24px] p-8 mt-2 shadow-sm animate-fade-in relative flex flex-col min-h-[calc(100vh-200px)]">
           <button
             onClick={() => setSelectedTodo(null)}
             className="absolute top-8 right-10 text-[14px] font-bold text-gray-800 hover:text-[#ff6b6b] transition-colors"
@@ -287,12 +287,12 @@ function Home() {
           </div>
         </div>
       ) : (
-        <div className="bg-white border-[1.5px] border-[#eff0f3] rounded-[24px] p-6 lg:p-8 mt-2 shadow-sm">
+        <div className="bg-white border-[1.5px] border-[#eff0f3] rounded-[24px] p-6 lg:p-8 mt-2 shadow-sm min-h-[calc(100vh-200px)] flex flex-col">
           {/* Grid Layout */}
-          <div className="grid grid-cols-1 xl:grid-cols-[1fr_380px] gap-8 xl:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
 
             {/* Left Column: To-Do */}
-            <div className="bg-transparent relative overflow-hidden xl:border-r-[1.5px] xl:border-[#eff0f3] xl:pr-10">
+            <div className="lg:col-span-2 bg-transparent relative overflow-hidden lg:border-r-[1.5px] lg:border-[#eff0f3] lg:pr-10">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2 text-[#ff6b6b]">
                   <ClipboardIcon />
@@ -310,15 +310,9 @@ function Home() {
                 20 June <span className="text-gray-400 font-medium">• Today</span>
               </div>
 
-              <div className="space-y-[28px] max-h-[600px] overflow-y-auto pr-2 scrollbar-none pb-10">
+              <div className="space-y-[28px] h-[calc(100vh-360px)] min-h-[400px] overflow-y-auto pr-2 scrollbar-none pb-10">
                 {activeTodos.length === 0 ? (
-                  <div className="text-center py-12 bg-[#f8f9fc] rounded-[20px] border border-dashed border-gray-200 mb-4 flex flex-col items-center justify-center min-h-[200px]">
-                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-4">
-                      <ClipboardIcon className="text-gray-300 w-8 h-8" />
-                    </div>
-                    <p className="text-gray-500 font-medium text-[15px]">No active tasks right now.</p>
-                    <p className="text-gray-400 text-sm mt-1">Enjoy your free time or add a new task!</p>
-                  </div>
+                  <p className="text-center text-gray-400 py-10 font-medium bg-white rounded-2xl border border-[#eceef2] mb-4">No active tasks right now. Great job!</p>
                 ) : (
                   activeTodos.map(todo => {
                     const isExtreme = todo.priority === 'Extreme';
@@ -457,11 +451,9 @@ function Home() {
                   <h3 className="text-[17px] font-bold text-[#10b981]">Completed Task</h3>
                 </div>
 
-                <div className="space-y-[28px] max-h-[350px] overflow-y-auto pr-2 scrollbar-none">
+                <div className="space-y-[28px] h-[calc(100vh-560px)] min-h-[250px] overflow-y-auto pr-2 scrollbar-none">
                   {completedTodos.length === 0 ? (
-                    <div className="text-center py-8 bg-[#f8f9fc] rounded-[20px] border border-dashed border-gray-200 flex flex-col items-center justify-center">
-                      <p className="text-gray-400 font-medium text-[14px]">No completed tasks yet.</p>
-                    </div>
+                    <p className="text-center text-gray-400 py-6 font-medium text-sm bg-white rounded-2xl border border-[#eceef2]">No completed tasks yet.</p>
                   ) : (
                     completedTodos.map(todo => (
                       <div
@@ -565,8 +557,8 @@ const CalendarIcon = ({ className }) => (
 const PlusIcon = () => (
   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" /></svg>
 );
-const ClipboardIcon = ({ className = "w-6 h-6 text-gray-400" }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+const ClipboardIcon = () => (
+  <svg className="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
 );
 const ChartPieIcon = () => (
   <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path strokeLinecap="round" strokeLinejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>
